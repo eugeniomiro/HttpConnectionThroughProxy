@@ -3,10 +3,50 @@
 
 #include "HttpProxyConnection.h"
 
-using namespace std;
-
-int main()
+int main(int argc, char* argv[])
 {
-	cout << "Hello CMake." << endl;
-	return 0;
+    try 
+    {
+        std::string proxy_url;
+
+        if (argc > 1)
+        {
+            proxy_url = argv[1];
+        }
+        std::cout << "Using proxy: '" << proxy_url << "'\n";
+
+        asio::io_context ioc;
+        asio::ssl::context ssl_ctx(asio::ssl::context::tls_client);
+        ssl_ctx.set_default_verify_paths();
+        ssl_ctx.set_verify_mode(asio::ssl::verify_peer);
+
+        HttpConnector connector(ioc, proxy_url);
+
+        auto ssl_stream = connector.connectSSL("www.example.com", "443", ssl_ctx);
+
+        namespace http = boost::beast::http;
+        http::request<http::string_body> req{ http::verb::get, "/", 11 };
+        req.set(http::field::host, "www.example.com");
+        req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+
+        http::write(ssl_stream, req);
+
+        boost::beast::flat_buffer buffer;
+        http::response<http::string_body> res;
+        http::read(ssl_stream, buffer, res);
+
+        std::cout << res << "\n";
+
+        boost::system::error_code ec;
+        ssl_stream.shutdown(ec);
+        if (ec == asio::error::eof) ec = {};
+        if (ec) throw boost::system::system_error(ec);
+
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error: " << e.what() << "\n";
+        return 1;
+    }
+    return 0;
 }

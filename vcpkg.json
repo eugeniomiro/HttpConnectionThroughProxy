@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "dependencies": [
     "boost-asio",
-    "boost-beast"
+    "boost-beast",
+    "boost-url",
+    "boost-system",
+    "openssl"
   ]
 }

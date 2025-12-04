@@ -4,5 +4,6 @@
 #pragma once
 
 #include "HttpConnector.h"
+#include <iostream>
 
 // TODO: Reference additional headers your program requires here.

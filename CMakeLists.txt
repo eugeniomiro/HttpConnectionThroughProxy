@@ -8,7 +8,8 @@ endif()
 
 project ("HttpConnectionThroughProxy")
 
-set (selected_boost_components) # Specify the required Boost components here
+# Boost
+set (selected_boost_components url) # Specify the required Boost components here
 
 find_package (Boost REQUIRED COMPONENTS ${selected_boost_components})
 if (Boost_FOUND)
@@ -19,6 +20,18 @@ if (Boost_FOUND)
     message ("  boost components: '${selected_boost_components}'")
     message ("  boost libraries: '${Boost_LIBRARIES}'")
 endif()
+
+# OpenSSL
+find_package(OpenSSL REQUIRED)
+if (OpenSSL_FOUND)
+    message("OpenSSL found")
+    message("  include dir: ${OPENSSL_INCLUDE_DIR}")
+    message("  version:     ${OPENSSL_VERSION}")
+    message("  libraries:   ${OPENSSL_LIBRARIES}")
+else()
+    message("OpenSSL not found")
+endif()
+
 
 # Include sub-projects.
 add_subdirectory ("HttpProxyConnection")

@@ -18,3 +18,11 @@ target_include_directories(
 	PRIVATE 
 		${Boost_INCLUDE_DIRS}
 )
+
+target_link_libraries(
+	HttpProxyConnection 
+	PRIVATE
+        ${Boost_LIBRARIES}
+		OpenSSL::SSL
+		OpenSSL::Crypto
+)
