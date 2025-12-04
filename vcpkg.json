@@ -3,6 +3,7 @@
   "name": "http-connection-through-proxy",
   "version": "1.0.0",
   "dependencies": [
-    "boost-asio"
+    "boost-asio",
+    "boost-beast"
   ]
 }
