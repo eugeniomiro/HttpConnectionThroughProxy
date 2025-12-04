@@ -13,3 +13,15 @@ project ("HttpConnectionThroughProxy")
 
 # Include sub-projects.
 add_subdirectory ("HttpProxyConnection")
+
+set (selected_boost_components) # Specify the required Boost components here
+
+find_package (Boost REQUIRED COMPONENTS ${selected_boost_components})
+if (Boost_FOUND)
+	include_directories(${Boost_INCLUDE_DIRS})
+	message ("Boost found")
+    message ("  include dirs: ${Boost_INCLUDE_DIRS}")
+    message ("  library dirs: ${Boost_LIBRARY_DIRS}")
+    message ("  boost components: '${selected_boost_components}'")
+    message ("  boost libraries: '${Boost_LIBRARIES}'")
+endif()
