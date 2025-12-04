@@ -11,8 +11,6 @@ endif()
 
 project ("HttpConnectionThroughProxy")
 
-# Include sub-projects.
-add_subdirectory ("HttpProxyConnection")
 
 set (selected_boost_components) # Specify the required Boost components here
 
@@ -25,3 +23,6 @@ if (Boost_FOUND)
     message ("  boost components: '${selected_boost_components}'")
     message ("  boost libraries: '${Boost_LIBRARIES}'")
 endif()
+
+# Include sub-projects.
+add_subdirectory ("HttpProxyConnection")
