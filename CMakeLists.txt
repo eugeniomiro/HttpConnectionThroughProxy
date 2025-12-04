@@ -8,7 +8,6 @@ endif()
 
 project ("HttpConnectionThroughProxy")
 
-
 set (selected_boost_components) # Specify the required Boost components here
 
 find_package (Boost REQUIRED COMPONENTS ${selected_boost_components})
